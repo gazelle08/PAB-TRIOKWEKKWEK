@@ -21,32 +21,35 @@ class ProdukResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('userid')
-                    ->label('User ID')
-                    ->required(),
-                Forms\Components\TextInput::make('kategori')
-                    ->label('Kategori')
-                    ->required(),
-                Forms\Components\TextInput::make('berat')
-                    ->label('Berat (gram)')
-                    ->numeric()
-                    ->required(),
-                Forms\Components\Textarea::make('deskripsi')
-                    ->label('Deskripsi')
-                    ->required(),
-                Forms\Components\TextInput::make('nama')
-                    ->label('Nama Produk')
-                    ->required(),
-                Forms\Components\TextInput::make('stock')
-                    ->label('Stock')
-                    ->numeric()
-                    ->required(),
-                Forms\Components\TextInput::make('harga')
-                    ->label('Harga')
-                    ->numeric()
-                    ->required(),
-            ]);
+        ->schema([
+            Forms\Components\TextInput::make('userid')
+                ->label('User ID')
+                ->required(),
+            Forms\Components\Select::make('kategori_id')
+                ->label('Kategori')
+                ->relationship('kategori', 'nama')
+                ->required(),
+            Forms\Components\TextInput::make('nama')
+                ->label('Nama Produk')
+                ->required()
+                ->maxLength(500),
+            Forms\Components\TextInput::make('berat')
+                ->label('Berat (gram)')
+                ->required()
+                ->numeric(),
+            Forms\Components\Textarea::make('deskripsi')
+                ->label('Deskripsi')
+                ->required()
+                ->maxLength(1000),
+            Forms\Components\TextInput::make('stock')
+                ->label('Stock')
+                ->required()
+                ->numeric(),
+            Forms\Components\TextInput::make('harga')
+                ->label('Harga (Rp)')
+                ->required()
+                ->numeric(),
+        ]);
     }
 
     // Tabel untuk menampilkan data produk
@@ -56,7 +59,7 @@ class ProdukResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('userid')
                     ->label('User ID'),
-                Tables\Columns\TextColumn::make('kategori')
+                Tables\Columns\TextColumn::make('kategori.nama')
                     ->label('Kategori'),
                 Tables\Columns\TextColumn::make('berat')
                     ->label('Berat (gram)'),

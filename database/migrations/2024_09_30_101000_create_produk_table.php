@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
-            $table->integer('userid');
-            $table->string('kategori', 500);
+            $table->unsignedBigInteger('userid');
+            $table->unsignedBigInteger('kategori_id');
             $table->integer('berat');
             $table->string('deskripsi', 1000);
             $table->string('nama', 500);
             $table->integer('stock');
             $table->integer('harga');
             $table->timestamps();
+        
+            // Foreign key constraint
+            $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
         });
     }
 
