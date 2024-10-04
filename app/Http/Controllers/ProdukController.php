@@ -35,7 +35,6 @@ class ProdukController extends Controller
     {
         $request->validate([
             'id' => 'required|integer',
-            'userid' => 'required|integer',
             'nama' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategori,id',
             'berat' => 'required|numeric',
@@ -46,7 +45,6 @@ class ProdukController extends Controller
 
         Produk::create([
             'id' => $request->id,
-            'userid' => $request->userid,
             'nama' => $request->nama,
             'kategori_id' => $request->kategori_id,
             'berat' => $request->berat,

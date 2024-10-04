@@ -11,7 +11,6 @@ class Produk extends Model
     use HasFactory;
     protected $fillable = [
             'id',
-            'userid',
             'kategori_id',
             'berat',
             'deskripsi',
