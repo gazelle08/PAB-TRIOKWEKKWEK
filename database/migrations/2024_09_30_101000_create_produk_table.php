@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('userid');
             $table->unsignedBigInteger('kategori_id');
             $table->integer('berat');
             $table->string('deskripsi', 1000);

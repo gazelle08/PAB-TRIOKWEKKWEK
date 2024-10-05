@@ -22,9 +22,6 @@ class ProdukResource extends Resource
     {
         return $form
         ->schema([
-            Forms\Components\TextInput::make('userid')
-                ->label('User ID')
-                ->required(),
             Forms\Components\Select::make('kategori_id')
                 ->label('Kategori')
                 ->relationship('kategori', 'nama')
@@ -57,8 +54,6 @@ class ProdukResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('userid')
-                    ->label('User ID'),
                 Tables\Columns\TextColumn::make('kategori.nama')
                     ->label('Kategori'),
                 Tables\Columns\TextColumn::make('berat')
