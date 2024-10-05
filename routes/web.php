@@ -1,7 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\TransactionController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route untuk menampilkan semua data dari Cart
+Route::get('/cart', [CartController::class, 'index']);
+
+// Route untuk menampilkan semua data dari Transaction
+Route::get('/transactions', [TransactionController::class, 'index']);
