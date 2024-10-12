@@ -10,7 +10,6 @@ class CreateTransactionTable extends Migration
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('userid');
             $table->string('transaction_number', 5000);
             $table->string('telepon', 255);
             $table->string('no_resi', 255)->nullable();
