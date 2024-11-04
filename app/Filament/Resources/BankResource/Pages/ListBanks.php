@@ -28,7 +28,7 @@ class ListBanks extends ListRecords
     // Ambil data pengguna
     $data = \App\Models\Bank::all();
     // Load view untuk cetak PDF
-    $pdf = \PDF::loadView('laporan.cetak', ['data' => $data]);
+    $pdf = \PDF::loadView('laporan.Bank', ['data' => $data]);
     // Unduh file PDF
     return response()->streamDownload(fn() => print($pdf->output()), 'databank.pdf');
     }

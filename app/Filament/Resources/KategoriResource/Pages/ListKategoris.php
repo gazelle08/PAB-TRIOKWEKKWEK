@@ -28,7 +28,7 @@ class ListKategoris extends ListRecords
  // Ambil data pengguna
  $data = \App\Models\Kategori::all();
  // Load view untuk cetak PDF
- $pdf = \PDF::loadView('laporan.cetak', ['data' => $data]);
+ $pdf = \PDF::loadView('laporan.kategori', ['data' => $data]);
  // Unduh file PDF
  return response()->streamDownload(fn() => print($pdf->output()), 'datakategori.pdf');
  }

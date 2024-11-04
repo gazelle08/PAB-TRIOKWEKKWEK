@@ -28,7 +28,7 @@ class ListTransactions extends ListRecords
  // Ambil data pengguna
  $data = \App\Models\Transaction::all();
  // Load view untuk cetak PDF
- $pdf = \PDF::loadView('laporan.cetak', ['data' => $data]);
+ $pdf = \PDF::loadView('laporan.transaksi', ['data' => $data]);
  // Unduh file PDF
  return response()->streamDownload(fn() => print($pdf->output()), 'laporantransaksi.pdf');
  }

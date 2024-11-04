@@ -28,7 +28,7 @@ class ListProduks extends ListRecords
     // Ambil data pengguna
     $data = \App\Models\Produk::all();
     // Load view untuk cetak PDF
-    $pdf = \PDF::loadView('laporan.cetak', ['data' => $data]);
+    $pdf = \PDF::loadView('laporan.produk', ['data' => $data]);
     // Unduh file PDF
     return response()->streamDownload(fn() => print($pdf->output()), 'laporanProduk.pdf');
     }
