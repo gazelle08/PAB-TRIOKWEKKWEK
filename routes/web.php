@@ -19,3 +19,12 @@ Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.
 // Checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+
+use App\Http\Controllers\ReportController;
+
+Route::get('/report/sales-by-product', [ReportController::class, 'reportSalesByProduct']);
+Route::get('/report/transactions-by-user', [ReportController::class, 'reportTransactionsByUser']);
+Route::get('/report/top-categories', [ReportController::class, 'reportTopCategories']);
+;
+Route::get('/laporan/pdf', [ReportController::class, 'generatePdf'])->name('laporan.pdf');
+
