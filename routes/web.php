@@ -1,10 +1,21 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\produkController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CheckoutController;
 
-// Route untuk menampilkan semua data dari Cart
-Route::get('/cart', [CartController::class, 'index']);
+// Beranda
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Route untuk menampilkan semua data dari Transaction
-Route::get('/transactions', [TransactionController::class, 'index']);
+// Halaman Detail Produk
+Route::get('/produk/{id}', [produkController::class, 'show'])->name('produk.show');
+
+// Keranjang Belanja
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
+// Checkout
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
