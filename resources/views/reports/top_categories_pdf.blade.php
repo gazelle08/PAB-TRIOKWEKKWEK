@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Laporan Kategori Terlaris</title>
     <style>
-table {
+        table {
             width: 100%;
             border-collapse: collapse;
         }
@@ -12,20 +13,15 @@ table {
             padding: 8px;
             text-align: left;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 15px;
-            margin-bottom: 20px;
-            color: white;
-            background-color: #007bff;
-            text-decoration: none;
-            border-radius: 5px;
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
     <h2>Laporan Kategori Terlaris</h2>
-    <a href="{{ route('top-categories.pdf') }}" class="btn">Cetak Laporan PDF</a>
     <table>
         <thead>
             <tr>
@@ -46,10 +42,10 @@ table {
             @endforeach
         </tbody>
     </table>
-</body>
-
-<footer>
-        <p>&copy; 2024 Toys Hobbies. Semua hak dilindungi.</p>
-        <p>Email: info@toyshobbies.com | Telepon: (021) 123-4567</p>
+    <footer>
+        <p>Total Data: {{ $topCategories->count() }} kategori</p>
+        <p>© 2024 Toys Hobbies. All rights reserved.</p>
+        <p>Email: info@toyshobbies.com | Phone: (021) 123-4567</p>
     </footer>
+</body>
 </html>

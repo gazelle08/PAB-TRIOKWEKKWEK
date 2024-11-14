@@ -22,9 +22,9 @@ Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('
 
 use App\Http\Controllers\ReportController;
 
-Route::get('/report/sales-by-product', [ReportController::class, 'reportSalesByProduct']);
-Route::get('/report/transactions-by-user', [ReportController::class, 'reportTransactionsByUser']);
-Route::get('/report/top-categories', [ReportController::class, 'reportTopCategories']);
-;
-Route::get('/laporan/pdf', [ReportController::class, 'generatePdf'])->name('laporan.pdf');
-
+Route::get('/sales-by-produk', [ReportController::class, 'reportSalesByProduk']);
+Route::get('/top-categories', [ReportController::class, 'reportTopCategories']);
+Route::get('/sales-by-produk/pdf', [ReportController::class, 'generateSalesByProdukPdf'])->name('sales-by-produk.pdf');
+Route::get('/top-categories/pdf', [ReportController::class, 'generateTopCategoriesPdf'])->name('top-categories.pdf');
+Route::get('/stok-produk-kategori', [ReportController::class, 'stokProdukByKategori']);
+Route::get('/stok-produk-kategori/pdf', [ReportController::class, 'generatePdfStokProdukByKategori'])->name('stok.produk.kategori.pdf');

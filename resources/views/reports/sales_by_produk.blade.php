@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Kategori Terlaris</title>
+    <title>Laporan Penjualan per Produk</title>
     <style>
-table {
+        table {
             width: 100%;
             border-collapse: collapse;
         }
@@ -24,24 +24,29 @@ table {
     </style>
 </head>
 <body>
-    <h2>Laporan Kategori Terlaris</h2>
-    <a href="{{ route('top-categories.pdf') }}" class="btn">Cetak Laporan PDF</a>
+    <h2>Laporan Penjualan per Produk</h2>
+    
+    <!-- Button to download the PDF -->
+    <a href="{{ route('sales-by-produk.pdf') }}" class="btn">Cetak Laporan PDF</a>
+
     <table>
         <thead>
             <tr>
-                <th>Kategori</th>
-                <th>Total Terjual</th>
-                <th>Jumlah Produk Terjual</th>
+                <th>Nama Produk</th>
+                <th>Nama Kategori</th>
+                <th>Total Penjualan</th>
+                <th>Total Kuantitas</th>
                 <th>Total Pendapatan</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($topCategories as $category)
+            @foreach($salesData as $data)
                 <tr>
-                    <td>{{ $category->kategori_nama }}</td>
-                    <td>{{ $category->total_quantity_sold }}</td>
-                    <td>{{ $category->total_products_sold }}</td>
-                    <td>Rp {{ number_format($category->total_revenue) }}</td>
+                    <td>{{ $data->produk_nama }}</td>
+                    <td>{{ $data->kategori_nama }}</td>
+                    <td>{{ $data->total_sales }}</td>
+                    <td>{{ $data->total_quantity }}</td>
+                    <td>Rp {{ number_format($data->total_revenue, 2, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
