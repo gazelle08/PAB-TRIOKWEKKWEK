@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Home - Toys Hobbies</title>
+    <title>Detail Produk - {{ $produk->nama }}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -21,13 +21,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/') }}">Home</a>
+                        <a class="nav-link" href="{{ url('/') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/produk') }}">Products</a>
+                        <a class="nav-link" href="{{ url('/produk') }}">Produk</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/cart') }}">Cart</a>
+                        <a class="nav-link" href="{{ url('/cart') }}">Keranjang</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/checkout') }}">Checkout</a>
@@ -37,40 +37,25 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="bg-light py-5">
-        <div class="container text-center">
-            <h1>Welcome to Toys Hobbies</h1>
-            <a href="{{ url('/produk') }}" class="btn btn-primary btn-lg">Shop Now</a>
-        </div>
-    </div>
-
-    <!-- Features Section -->
+    <!-- Bagian Detail Produk -->
     <div class="container py-5">
+        <h1 class="text-center mb-4">{{ $produk->nama }}</h1>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Fast Delivery</h5>
-                        <p class="card-text">Get your products delivered in no time.</p>
-                    </div>
-                </div>
+            <div class="col-md-6">
+                <img src="{{ asset('images/' . $produk->image) }}" class="img-fluid" alt="{{ $produk->nama }}">
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Best Quality</h5>
-                        <p class="card-text">We ensure top-notch quality in all our offerings.</p>
+            <div class="col-md-6">
+                <h3>Harga: Rp {{ number_format($produk->harga, 0, ',', '.') }}</h3>
+                <p><strong>Deskripsi:</strong></p>
+                <p>{{ $produk->deskripsi }}</p>
+                <form action="{{ route('cart.add', $produk->id) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Jumlah</label>
+                        <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control" style="width: 80px;">
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Customer Support</h5>
-                        <p class="card-text">24/7 support to assist you at any time.</p>
-                    </div>
-                </div>
+                    <button type="submit" class="btn btn-success">Tambah ke Keranjang</button>
+                </form>
             </div>
         </div>
     </div>
@@ -78,7 +63,7 @@
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">© 2024 Toys Hobbies. All Rights Reserved.</p>
+            <p class="mb-0">© 2024 Toys Hobbies. Semua Hak Dilindungi.</p>
         </div>
     </footer>
 

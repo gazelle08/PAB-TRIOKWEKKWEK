@@ -22,30 +22,27 @@ class ProdukResource extends Resource
     {
         return $form
         ->schema([
+            Forms\Components\TextInput::make('nama')
+                ->required()
+                ->maxLength(255),
             Forms\Components\Select::make('kategori_id')
-                ->label('Kategori')
                 ->relationship('kategori', 'nama')
                 ->required(),
-            Forms\Components\TextInput::make('nama')
-                ->label('Nama Produk')
-                ->required()
-                ->maxLength(500),
             Forms\Components\TextInput::make('berat')
-                ->label('Berat (gram)')
-                ->required()
-                ->numeric(),
-            Forms\Components\Textarea::make('deskripsi')
-                ->label('Deskripsi')
-                ->required()
-                ->maxLength(1000),
+                ->numeric()
+                ->required(),
             Forms\Components\TextInput::make('stock')
-                ->label('Stock')
-                ->required()
-                ->numeric(),
+                ->numeric()
+                ->required(),
             Forms\Components\TextInput::make('harga')
-                ->label('Harga (Rp)')
-                ->required()
-                ->numeric(),
+                ->numeric()
+                ->required(),
+            Forms\Components\FileUpload::make('image')
+                ->directory('produk_images')
+                ->image()
+                ->nullable(),
+            Forms\Components\Textarea::make('deskripsi')
+                ->maxLength(65535),
         ]);
     }
 
@@ -53,21 +50,13 @@ class ProdukResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('kategori.nama')
-                    ->label('Kategori'),
-                Tables\Columns\TextColumn::make('berat')
-                    ->label('Berat (gram)'),
-                Tables\Columns\TextColumn::make('deskripsi')
-                    ->label('Deskripsi')
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('nama')
-                    ->label('Nama Produk'),
-                Tables\Columns\TextColumn::make('stock')
-                    ->label('Stock'),
-                Tables\Columns\TextColumn::make('harga')
-                    ->label('Harga')
-                    ->money('IDR'),
+        ->columns([
+            Tables\Columns\TextColumn::make('nama')->sortable()->searchable(),
+            Tables\Columns\TextColumn::make('kategori.nama')->label('Kategori')->sortable()->searchable(),
+            Tables\Columns\TextColumn::make('berat')->sortable(),
+            Tables\Columns\TextColumn::make('stock')->sortable(),
+            Tables\Columns\TextColumn::make('harga')->sortable(),
+            Tables\Columns\ImageColumn::make('image')->label('Gambar'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat pada')
                     ->dateTime(),

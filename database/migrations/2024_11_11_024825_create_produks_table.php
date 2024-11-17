@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produk', function (Blueprint $table) {
+        Schema::create('produks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kategori_id');
-            $table->integer('berat');
-            $table->string('deskripsi', 1000);
+            $table->foreignId('kategori_id')->constrained('kategori')->onDelete('cascade'); // Relasi dengan kategori
             $table->string('nama', 500);
+            $table->decimal('berat', 8, 2); // Berat dengan presisi (contoh: 1.25 kg)
             $table->integer('stock');
             $table->integer('harga');
+            $table->string('image')->nullable(); // Kolom untuk menyimpan gambar
+            $table->text('deskripsi')->nullable(); // Deskripsi bisa kosong
             $table->timestamps();
-        
-            // Foreign key constraint
-            $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produk'); 
+        Schema::dropIfExists('produks'); 
     }
 };

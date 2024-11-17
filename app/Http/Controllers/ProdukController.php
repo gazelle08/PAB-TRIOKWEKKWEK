@@ -9,32 +9,29 @@ use Illuminate\Http\Request;
 class ProdukController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar semua produk.
      */
     public function index()
     {
         $produks = Produk::with('kategori')->get();
-        
         return view('produk.index', compact('produks'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan formulir untuk menambahkan produk baru.
      */
     public function create()
     {
         $kategori = Kategori::all();
-
         return view('produk.create', compact('kategori'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan produk baru ke dalam database.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|integer',
             'nama' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategori,id',
             'berat' => 'required|numeric',
@@ -43,21 +40,13 @@ class ProdukController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        Produk::create([
-            'id' => $request->id,
-            'nama' => $request->nama,
-            'kategori_id' => $request->kategori_id,
-            'berat' => $request->berat,
-            'stock' => $request->stock,
-            'harga' => $request->harga,
-            'deskripsi' => $request->deskripsi,
-        ]);
+        Produk::create($request->all());
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail produk berdasarkan ID.
      */
     public function show(Produk $produk)
     {
@@ -65,17 +54,16 @@ class ProdukController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan formulir untuk mengedit produk yang sudah ada.
      */
     public function edit(Produk $produk)
     {
         $kategori = Kategori::all();
-
         return view('produk.edit', compact('produk', 'kategori'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui informasi produk yang sudah ada.
      */
     public function update(Request $request, Produk $produk)
     {
@@ -88,26 +76,17 @@ class ProdukController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        // Update produk
-        $produk->update([
-            'nama' => $request->nama,
-            'kategori_id' => $request->kategori_id,
-            'berat' => $request->berat,
-            'stock' => $request->stock,
-            'harga' => $request->harga,
-            'deskripsi' => $request->deskripsi,
-        ]);
+        $produk->update($request->all());
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diupdate!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus produk dari database.
      */
     public function destroy(Produk $produk)
     {
         $produk->delete();
-
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
     }
 }

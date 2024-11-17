@@ -5,21 +5,26 @@ use App\Http\Controllers\produkController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 
-// Beranda
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Halaman Detail Produk
-Route::get('/produk/{id}', [produkController::class, 'show'])->name('produk.show');
+//home
+Route::get('/produk', [ProdukController::class, 'index'])->name('products.index');
+Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
+Route::resource('produk', ProdukController::class);
 
-// Keranjang Belanja
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+//cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::put('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 
-// Checkout
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+//checkout
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 
+//report
 use App\Http\Controllers\ReportController;
 
 Route::get('/sales-by-produk', [ReportController::class, 'reportSalesByProduk']);

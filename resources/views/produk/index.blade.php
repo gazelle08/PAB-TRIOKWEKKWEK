@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Home - Toys Hobbies</title>
+    <title>Products - Toys Hobbies</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -21,57 +21,39 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/') }}">Home</a>
+                        <a class="nav-link" href="{{ url('/') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/produk') }}">Products</a>
+                        <a class="nav-link active" href="{{ url('/produk') }}">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/cart') }}">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/checkout') }}">Checkout</a>
+                        <a class="nav-link" href="{{ url('/checkout') }}">Checkout</a> <!-- Fixed typo from 'checkhout' -->
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="bg-light py-5">
-        <div class="container text-center">
-            <h1>Welcome to Toys Hobbies</h1>
-            <a href="{{ url('/produk') }}" class="btn btn-primary btn-lg">Shop Now</a>
-        </div>
-    </div>
-
-    <!-- Features Section -->
+    <!-- Product Section -->
     <div class="container py-5">
+        <h1 class="text-center mb-4">Our Products</h1>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Fast Delivery</h5>
-                        <p class="card-text">Get your products delivered in no time.</p>
+            @foreach($produks as $produk)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ asset('images/' . $produk->image) }}" class="card-img-top" alt="{{ $produk->nama }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $produk->nama }}</h5>
+                            <p class="card-text text-muted">{{ $produk->description }}</p>
+                            <p class="card-text fw-bold">Price: Rp {{ number_format($produk->harga, 0, ',', '.') }}</p> <!-- Adjusted currency format -->
+                            <a href="{{ url('/produk/' . $produk->id) }}" class="btn btn-primary">View Details</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Best Quality</h5>
-                        <p class="card-text">We ensure top-notch quality in all our offerings.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Customer Support</h5>
-                        <p class="card-text">24/7 support to assist you at any time.</p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
