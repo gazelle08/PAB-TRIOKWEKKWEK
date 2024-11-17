@@ -95,7 +95,7 @@
 
             <div class="d-flex justify-content-between">
                 <h4>Total: Rp {{ number_format(array_reduce($cart, fn($carry, $item) => $carry + $item['price'] * $item['quantity'], 0), 0, ',', '.') }}</h4>
-                <a href="{{ route('checkout') }}" class="btn btn-success">Proses Pembayaran</a>
+                <a href="{{ route('checkout.index') }}" class="btn btn-success">Proses Pembayaran</a>
             </div>
         @else
             <p class="text-center">Keranjang Anda kosong.</p>
