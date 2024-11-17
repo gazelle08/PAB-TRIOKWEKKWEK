@@ -48,10 +48,11 @@ class ProdukController extends Controller
     /**
      * Menampilkan detail produk berdasarkan ID.
      */
-    public function show(Produk $produk)
-    {
+    public function show($id) {
+        $produk = Produk::findOrFail($id);
         return view('produk.show', compact('produk'));
     }
+    
 
     /**
      * Menampilkan formulir untuk mengedit produk yang sudah ada.
