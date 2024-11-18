@@ -32,6 +32,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/checkout') }}">Checkout</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-danger" href="{{ url('/admin/login') }}">Admin Login</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -52,7 +55,11 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="card-title">Fast Delivery</h5>
-                        <p class="card-text">Get your products delivered in no time.</p>
+                        <p class="card-text">Get your products delivered in no time. 
+                            We understand that when you order something, you want it as quickly as possible. 
+                            That's why we partner with reliable shipping services to ensure that your items arrive at your doorstep promptly.
+                             Whether it's a last-minute gift or a special treat for yourself, 
+                            our efficient logistics system is designed to meet your needs without delay.</p>
                     </div>
                 </div>
             </div>
@@ -60,7 +67,10 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="card-title">Best Quality</h5>
-                        <p class="card-text">We ensure top-notch quality in all our offerings.</p>
+                        <p class="card-text">We ensure top-notch quality in all our offerings. 
+                            Our products are carefully selected and tested to meet the highest standards. 
+                            We believe that quality is paramount, which is why we work with trusted manufacturers and suppliers who share our commitment to excellence. 
+                            From toys to hobbies, each item is crafted with care, ensuring durability and safety for our customers</p>
                     </div>
                 </div>
             </div>
@@ -68,7 +78,9 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="card-title">Customer Support</h5>
-                        <p class="card-text">24/7 support to assist you at any time.</p>
+                        <p class="card-text">24/7 support to assist you at any time. Our dedicated customer service team is always ready to help you with any inquiries or issues you may have.
+                             Whether you need assistance with your order, have questions about a product, or require support after your purchase, we are just a call or click away. 
+                            Your satisfaction is our priority, and we strive to provide a seamless shopping experience</p>
                     </div>
                 </div>
             </div>
