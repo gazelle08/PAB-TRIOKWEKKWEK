@@ -9,6 +9,17 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $table = 'transaction';
-    protected $fillable = ['userid', 'transaction_number', 'telepon', 'no_resi', 'kurir', 'kota', 'ongkir', 'total', 'bukti_transaksi', 'date', 'alamat'];
+    protected $table = 'transaction'; // Ensure this matches your migration
+    protected $fillable = [
+        'transaction_number',
+        'telepon',
+        'no_resi',
+        'kurir',
+        'kota',
+        'ongkir',
+        'total',
+        'bukti_transaksi',
+        'date',
+        'alamat',
+    ];
 }

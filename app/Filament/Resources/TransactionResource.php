@@ -5,55 +5,40 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Transaction;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\Action;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\TransactionsImport;
-use Illuminate\Http\Request;
 
 class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Transaksi';
+    protected static ?string $navigationGroup = 'Laporan';
 
-    public static function form(Form $form): Form
+    public static function form(Forms\Form $form): Forms\Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('transaction_number')
-                    ->required()
-                    ->maxLength(5000),
-                Forms\Components\TextInput::make('telepon')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('no_resi')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kurir')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kota')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('ongkir')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('total')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Textarea::make('alamat')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('date')
-                    ->required(),
-                Forms\Components\TextInput::make('bukti_transaksi')
-                    ->maxLength(1000),
+                Forms\Components\TextInput::make('transaction_number')->required()->maxLength(255),
+                Forms\Components\TextInput::make('telepon')->required()->maxLength(255),
+                Forms\Components\TextInput::make('no_resi')->maxLength(255),
+                Forms\Components\TextInput::make('kurir')->required()->maxLength(255),
+                Forms\Components\TextInput::make('kota')->required()->maxLength(255),
+                Forms\Components\TextInput::make('ongkir')->required()->numeric(),
+                Forms\Components\TextInput::make('total')->required()->numeric(),
+                Forms\Components\Textarea::make('alamat')->required(),
+                Forms\Components\DateTimePicker::make('date')->required(),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table
             ->columns([
@@ -67,18 +52,41 @@ class TransactionResource extends Resource
                 TextColumn::make('date')->sortable(),
             ])
             ->actions([
-                Tables\Actions\Action::make('Import')
-                    ->action(function (Request $request) {
-                        $request->validate([
-                            'file' => 'required|mimes:xlsx,csv',
-                        ]);
-                        Excel::import(new TransactionsImport, $request->file('file'));
-                        return redirect()->back()->with('success', 'Transactions imported successfully!');
-                    }),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
-            ->filters([
-                // Add filters if needed
+            ->headerActions([
+                Action::make('importExcel')
+                ->label('Import Excel')
+                ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new TransactionsImport, $filePath);
+
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public') // Pastikan sesuai dengan disk yang digunakan
+                            ->directory('imports')
+                            ->acceptedFileTypes([
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.ms-excel',
+                            ])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Transaksi')
+                    ->modalButton('Import')
+                    ->color('success'),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [];
     }
 
     public static function getPages(): array

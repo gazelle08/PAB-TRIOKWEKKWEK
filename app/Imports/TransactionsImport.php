@@ -4,22 +4,21 @@ namespace App\Imports;
 
 use App\Models\Transaction;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class TransactionsImport implements ToModel
+class TransactionsImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
         return new Transaction([
-            'transaction_number' => $row[0],
-            'telepon' => $row[1],
-            'no_resi' => $row[2],
-            'kurir' => $row[3],
-            'kota' => $row[4],
-            'ongkir' => $row[5],
-            'total' => $row[6],
-            'bukti_transaksi' => $row[7],
-            'date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8]),
-            'alamat' => $row[9],
+            'transaction_number' => $row['transaction_number'],
+            'telepon' => $row['telepon'],
+            'kota' => $row['kota'],
+            'kurir' => $row['kurir'],
+            'total' => $row['total'],
+            'ongkir' => $row['ongkir'],
+            'alamat' => $row['alamat'],
+            'date' => \Carbon\Carbon::parse($row['date']),
         ]);
     }
 }
