@@ -3,16 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Pages;
-use App\Filament\Resources\TransactionResource\RelationManagers;
 use App\Models\Transaction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\TransactionsImport;
+use Illuminate\Http\Request;
 
 class TransactionResource extends Resource
 {
@@ -66,8 +66,18 @@ class TransactionResource extends Resource
                 TextColumn::make('total')->sortable(),
                 TextColumn::make('date')->sortable(),
             ])
+            ->actions([
+                Tables\Actions\Action::make('Import')
+                    ->action(function (Request $request) {
+                        $request->validate([
+                            'file' => 'required|mimes:xlsx,csv',
+                        ]);
+                        Excel::import(new TransactionsImport, $request->file('file'));
+                        return redirect()->back()->with('success', 'Transactions imported successfully!');
+                    }),
+            ])
             ->filters([
-                //
+                // Add filters if needed
             ]);
     }
 
