@@ -92,7 +92,7 @@
             <button type="submit" class="btn btn-primary">Checkout</button>
         </form>
 
-<h3>Detail Transaksi Terakhir</h3>
+<h3></h3>
 @if(session('latest_transaction'))
     <table class="table table-bordered">
         <thead>
@@ -129,7 +129,7 @@
         </tbody>
     </table>
 @else
-    <p class="text-center">Tidak ada detail transaksi yang ditemukan.</p>
+    <p class="text-center"></p>
 @endif
     @else
         <p class="text-center">Keranjang Anda kosong. Silakan tambahkan produk sebelum checkout.</p>
