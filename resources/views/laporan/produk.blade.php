@@ -15,13 +15,13 @@
     <table>
         <thead>
             <tr>
-                <th>kategori</th><th>nama</th><th>deskripsi</th><th>stock</th><th>harga</th>
+                <th>ID kategori</th><th>nama</th><th>deskripsi</th><th>stock</th><th>harga</th>
             </tr>
         </thead>
         <tbody>
         @foreach($data as $produk)
             <tr>
-            <td>{{ $produk->kategori }}</td>
+            <td>{{ $produk->id }}</td>
             <td>{{ $produk->nama }}</td>
             <td>{{ $produk->deskripsi }}</td>
             <td>{{ $produk->stock }}</td>
