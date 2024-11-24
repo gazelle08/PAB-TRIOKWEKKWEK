@@ -19,7 +19,11 @@ class BankResource extends Resource
 {
     protected static ?string $model = Bank::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+    protected static ?string $navigationGroup = 'Laporan';
+    protected static ?string $navigationLabel = 'Data Bank';
+
+
 
 
     public static function form(Form $form): Form

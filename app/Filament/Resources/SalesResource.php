@@ -22,7 +22,7 @@ class SalesResource extends Resource
     protected static ?string $model = Sales::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
-    protected static ?string $navigationLabel = 'Sales';
+    protected static ?string $navigationLabel = 'Data Penjualan';
     protected static ?string $navigationGroup = 'Laporan';
 
     public static function form(Form $form): Form

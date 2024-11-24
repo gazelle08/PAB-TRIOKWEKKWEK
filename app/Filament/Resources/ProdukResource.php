@@ -14,8 +14,10 @@ use Illuminate\Database\Eloquent\Builder;
 class ProdukResource extends Resource
 {
     protected static ?string $model = Produk::class;
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static ?string $navigationGroup = 'Admin Manage';
+    protected static ?string $navigationLabel = 'Produk';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     // Form schema (form untuk create dan edit produk)
     public static function form(Form $form): Form
