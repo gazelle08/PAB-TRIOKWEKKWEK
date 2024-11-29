@@ -41,7 +41,7 @@
         <h1 class="text-center mb-4">{{ $produk->nama }}</h1>
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ asset('images/' . $produk->image) }}" class="img-fluid" alt="{{ $produk->nama }}">
+                <img src="{{ asset('storage/' . $produk->image) }}" class="img-fluid" alt="{{ $produk->nama }}">
             </div>
             <div class="col-md-6">
                 <h3>Harga: Rp {{ number_format($produk->harga, 0, ',', '.') }}</h3>
