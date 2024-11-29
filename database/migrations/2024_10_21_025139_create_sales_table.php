@@ -20,7 +20,7 @@ class CreateSalesTable extends Migration
             $table->timestamp('sale_date');
             $table->timestamps();
 
-            $table->foreign('produk_id')->references('id')->on('produk')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('produks')->onDelete('cascade');
         });
     }
 

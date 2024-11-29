@@ -11,24 +11,24 @@ class TransactionDetailsSeeder extends Seeder
     {
         DB::table('transaction_details')->insert([
             [
-                'produkid' => 1, // Assuming this ID exists in produk
-                'transactionid' => 1, // Assuming this ID exists in transaction
+                'produk_id' => 1, // Assuming this ID exists in produk
+                'transaction_id' => 9, // Assuming this ID exists in transaction
                 'stock' => 2,
                 'harga' => 50000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'produkid' => 2,
-                'transactionid' => 1,
+                'produk_id' => 2,
+                'transaction_id' => 10,
                 'stock' => 1,
                 'harga' => 30000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'produkid' => 3,
-                'transactionid' => 2,
+                'produk_id' => 3,
+                'transaction_id' => 11,
                 'stock' => 1,
                 'harga' => 350000,
                 'created_at' => now(),

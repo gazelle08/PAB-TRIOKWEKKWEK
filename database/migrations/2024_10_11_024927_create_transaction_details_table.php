@@ -6,32 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTransactionDetailsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('produkid');
-            $table->unsignedBigInteger('transactionid');
+            $table->unsignedBigInteger('produk_id');
+            $table->unsignedBigInteger('transaction_id');
             $table->integer('stock');
             $table->decimal('harga', 10, 2);
             $table->timestamps();
 
             // Foreign keys
-            $table->foreign('produkid')->references('id')->on('produk')->onDelete('cascade');
-            $table->foreign('transactionid')->references('id')->on('transactions')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('produks')->onDelete('cascade');
+            $table->foreign('transaction_id')->references('id')->on('transaction')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('transaction_details');
