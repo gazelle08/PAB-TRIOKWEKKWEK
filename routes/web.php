@@ -33,3 +33,4 @@ Route::get('/sales-by-produk/pdf', [ReportController::class, 'generateSalesByPro
 Route::get('/top-categories/pdf', [ReportController::class, 'generateTopCategoriesPdf'])->name('top-categories.pdf');
 Route::get('/stok-produk-kategori', [ReportController::class, 'stokProdukByKategori']);
 Route::get('/stok-produk-kategori/pdf', [ReportController::class, 'generatePdfStokProdukByKategori'])->name('stok.produk.kategori.pdf');
+Route::get('/report/sales-by-product', [ReportController::class, 'reportSalesByProduk']);

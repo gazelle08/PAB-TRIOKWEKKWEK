@@ -12,53 +12,54 @@ class ReportController extends Controller
     // Laporan Penjualan per Produk
     public function reportSalesByProduk()
     {
-        $salesData = DB::table('produk')
-            ->join('transaction_details', 'produk.id', '=', 'transaction_details.produkid')
-            ->join('transaction', 'transaction.id', '=', 'transaction_details.transactionid')
-            ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
+        $salesData = DB::table('produks')
+            ->join('transaction_details', 'produks.id', '=', 'transaction_details.produk_id')
+            ->join('transaction', 'transaction.id', '=', 'transaction_details.transaction_id')
+            ->join('kategori', 'kategori.id', '=', 'produks.kategori_id')
             ->select(
-                'produk.nama as produk_nama',
+                'produks.nama as produk_nama',
                 'kategori.nama as kategori_nama',
                 DB::raw('COUNT(transaction_details.id) as total_sales'),
                 DB::raw('SUM(transaction_details.stock) as total_quantity'),
                 DB::raw('SUM(transaction_details.stock * transaction_details.harga) as total_revenue')
             )
-            ->groupBy('produk.id', 'produk.nama', 'kategori.id', 'kategori.nama')
+            ->groupBy('produks.id', 'produks.nama', 'kategori.id', 'kategori.nama')
             ->get();
     
         return view('reports.sales_by_produk', compact('salesData'));
     }
-       // Generate PDF for Sales by Product
-       public function generateSalesByProdukPdf()
-       {
-           $salesData = DB::table('produk')
-               ->join('transaction_details', 'produk.id', '=', 'transaction_details.produkid')
-               ->join('transaction', 'transaction.id', '=', 'transaction_details.transactionid')
-               ->join('kategori', 'kategori.id', '=', 'produk.kategori_id')
-               ->select(
-                   'produk.nama as produk_nama',
-                   'kategori.nama as kategori_nama',
-                   DB::raw('COUNT(transaction_details.id) as total_sales'),
-                   DB::raw('SUM(transaction_details.stock) as total_quantity'),
-                   DB::raw('SUM(transaction_details.stock * transaction_details.harga) as total_revenue')
-               )
-               ->groupBy('produk.id', 'produk.nama', 'kategori.id', 'kategori.nama')
-               ->get();
-       
-           $pdf = PDF::loadView('reports.sales_by_produk_pdf', compact('salesData'));
-           return $pdf->download('sales_by_produk_report.pdf');
-       }
+
+    // Generate PDF for Sales by Product
+    public function generateSalesByProdukPdf()
+    {
+        $salesData = DB::table('produks')
+            ->join('transaction_details', 'produks.id', '=', 'transaction_details.produk_id')
+            ->join('transaction', 'transaction.id', '=', 'transaction_details.transaction_id')
+            ->join('kategori', 'kategori.id', '=', 'produks.kategori_id')
+            ->select(
+                'produks.nama as produk_nama',
+                'kategori.nama as kategori_nama',
+                DB::raw('COUNT(transaction_details.id) as total_sales'),
+                DB::raw('SUM(transaction_details.stock) as total_quantity'),
+                DB::raw('SUM(transaction_details.stock * transaction_details.harga) as total_revenue')
+            )
+            ->groupBy('produks.id', 'produks.nama', 'kategori.id', 'kategori.nama')
+            ->get();
+    
+        $pdf = PDF::loadView('reports.sales_by_produk_pdf', compact('salesData'));
+        return $pdf->download('sales_by_produk_report.pdf');
+    }
 
     // Laporan Kategori Terlaris
     public function reportTopCategories()
     {
         $topCategories = DB::table('kategori')
-            ->join('produk', 'kategori.id', '=', 'produk.kategori_id')
-            ->join('transaction_details', 'produk.id', '=', 'transaction_details.produkid')
+            ->join('produks', 'kategori.id', '=', 'produks.kategori_id')
+            ->join('transaction_details', 'produks.id', '=', 'transaction_details.produk_id')
             ->select(
                 'kategori.nama as kategori_nama',
                 DB::raw('SUM(transaction_details.stock) as total_quantity_sold'),
-                DB::raw('COUNT(transaction_details.produkid) as total_products_sold'),
+                DB::raw('COUNT(transaction_details.produk_id) as total_products_sold'),
                 DB::raw('SUM(transaction_details.stock * transaction_details.harga) as total_revenue')
             )
             ->groupBy('kategori.id', 'kategori.nama')
@@ -71,12 +72,12 @@ class ReportController extends Controller
     public function generateTopCategoriesPdf()
     {
         $topCategories = DB::table('kategori')
-            ->join('produk', 'kategori.id', '=', 'produk.kategori_id')
-            ->join('transaction_details', 'produk.id', '=', 'transaction_details.produkid')
+            ->join('produks', 'kategori.id', '=', 'produks.kategori_id')
+            ->join('transaction_details', 'produks.id', '=', 'transaction_details.produk_id')
             ->select(
                 'kategori.nama as kategori_nama',
                 DB::raw('SUM(transaction_details.stock) as total_quantity_sold'),
-                DB::raw('COUNT(transaction_details.produkid) as total_products_sold'),
+                DB::raw('COUNT(transaction_details.produk_id) as total_products_sold'),
                 DB::raw('SUM(transaction_details.stock * transaction_details.harga) as total_revenue')
             )
             ->groupBy('kategori.id', 'kategori.nama')
@@ -89,12 +90,12 @@ class ReportController extends Controller
 
     public function stokProdukByKategori()
     {
-        $stokProdukKategori = DB::table('produk')
-            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+        $stokProdukKategori = DB::table('produks')
+            ->join('kategori', 'produks.kategori_id', '=', 'kategori.id')
             ->select(
                 'kategori.nama', 
-                DB::raw('COUNT(produk.id) as total_produk'),
-                DB::raw('SUM(produk.stock) as total_stock')
+                DB::raw('COUNT(produks.id) as total_produk'),
+                DB::raw('SUM(produks.stock) as total_stock')
             )
             ->groupBy('kategori.nama')
             ->get();
@@ -104,12 +105,12 @@ class ReportController extends Controller
     
     public function generatePdfStokProdukByKategori()
     {
-        $stokProdukKategori = DB::table('produk')
-            ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+        $stokProdukKategori = DB::table('produks')
+            ->join('kategori', 'produks.kategori_id', '=', 'kategori.id')
             ->select(
                 'kategori.nama',
-                DB::raw('COUNT(produk.id) as total_produk'),
-                DB::raw('SUM(produk.stock) as total_stock')
+                DB::raw('COUNT(produks.id) as total_produk'),
+                DB::raw('SUM(produks.stock) as total_stock')
             )
             ->groupBy('kategori.nama')
             ->get();
@@ -117,5 +118,4 @@ class ReportController extends Controller
         $pdf = PDF::loadView('reports.stok_produk_kategori_pdf', compact('stokProdukKategori'));
         return $pdf->download('stok_produk_kategori_report.pdf');
     }
-}    
-    
+}

@@ -49,7 +49,7 @@
         <thead>
             <tr>
                 <th>Nama Kategori</th>
-                <th>Total Produk</th>
+                <th>Total Produk Terjual</th>
                 <th>Total Stok</th>
             </tr>
         </thead>
